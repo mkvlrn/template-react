@@ -62,6 +62,7 @@ export default defineConfig(({ mode }) => {
         exclude: [
           "**/*.{test,spec}.{ts,tsx}",
           "src/main.tsx",
+          "src/router.ts",
           "src/{generated,routes,assets}",
           "**/*.{css,svg}",
         ],
