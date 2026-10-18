@@ -2,9 +2,9 @@ import { Link } from "@tanstack/react-router";
 
 export function Menu() {
   const menu: { to: string; text: string }[] = [
-    { to: "/", text: "Home" },
-    { to: "/dogs", text: "Dogs!" },
-    { to: "/cats", text: "Cats!" },
+    { text: "Home", to: "/" },
+    { text: "Dogs!", to: "/dogs" },
+    { text: "Cats!", to: "/cats" },
   ];
 
   return (

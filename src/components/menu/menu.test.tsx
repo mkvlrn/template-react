@@ -1,28 +1,42 @@
+import {
+  RouterProvider,
+  createMemoryHistory,
+  createRootRoute,
+  createRouter,
+} from "@tanstack/react-router";
 import { render, screen } from "@testing-library/react";
-import type { ComponentProps } from "react";
-import { expect, test, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { Menu } from "#/components/menu/menu";
 
-vi.mock("@tanstack/react-router", () => ({
-  ["Link"]: ({ children, to, ...props }: ComponentProps<"a"> & { to: string }) => (
-    <a href={to} {...props}>
-      {children}
-    </a>
-  ),
-}));
+vi.setConfig({ testTimeout: 1000 });
 
-test("should render navigation links", () => {
-  render(<Menu />);
+function renderMenu() {
+  const router = createRouter({
+    history: createMemoryHistory({ initialEntries: ["/"] }),
+    routeTree: createRootRoute({ component: Menu }),
+  });
+  return render(<RouterProvider router={router} />);
+}
 
-  expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/");
-  expect(screen.getByRole("link", { name: "Dogs!" })).toHaveAttribute("href", "/dogs");
-  expect(screen.getByRole("link", { name: "Cats!" })).toHaveAttribute("href", "/cats");
-});
+describe("menu", () => {
+  it("should render navigation links", async () => {
+    // Act
+    expect.hasAssertions();
+    renderMenu();
+    await screen.findByRole("link", { name: "Home" });
+    // Assert
+    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/");
+    expect(screen.getByRole("link", { name: "Dogs!" })).toHaveAttribute("href", "/dogs");
+    expect(screen.getByRole("link", { name: "Cats!" })).toHaveAttribute("href", "/cats");
+  });
 
-test("should apply the active link class", () => {
-  render(<Menu />);
-
-  for (const link of screen.getAllByRole("link")) {
-    expect(link).toHaveClass("[&.active]:font-bold");
-  }
+  it("should apply the active link class", async () => {
+    // Act
+    expect.hasAssertions();
+    renderMenu();
+    // Assert
+    for (const link of await screen.findAllByRole("link")) {
+      expect(link).toHaveClass("[&.active]:font-bold");
+    }
+  });
 });

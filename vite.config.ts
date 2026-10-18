@@ -1,57 +1,75 @@
+import path from "node:path";
 import process from "node:process";
-import baseTestConfig from "@mkvlrn/config/vitest";
+import baseConfig from "@mkvlrn/config/vite" with { type: "json" };
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
-import { defineConfig, loadEnv } from "vite";
-import { defineConfig as defineTestConfig, mergeConfig } from "vitest/config";
+import { type UserConfig, defineConfig, loadEnv, mergeConfig } from "vite-plus";
 
 export default defineConfig(({ mode }) => {
   const { PORT = "3000", GITHUB_ACTIONS } = loadEnv(mode, process.cwd(), "");
-  let viteBase = "/";
+
+  let base = "/";
   if (GITHUB_ACTIONS) {
-    viteBase = "/template-vite-react/";
+    base = "/template-vite-react/";
   }
 
-  const config = defineConfig({
-    base: viteBase,
+  const appConfig: UserConfig = {
+    base,
+    build: {
+      emptyOutDir: true,
+      outDir: "./build",
+      sourcemap: true,
+      target: "esnext",
+    },
+    fmt: {
+      ignorePatterns: ["src/generated/**"],
+    },
+    lint: {
+      ignorePatterns: ["src/generated/**"],
+      overrides: [
+        {
+          files: ["**/*.tsx"],
+          rules: {
+            "typescript/explicit-function-return-type": "off",
+            "typescript/explicit-module-boundary-types": "off",
+          },
+        },
+      ],
+      rules: {
+        "import/no-unassigned-import": [
+          "error",
+          { allow: ["**/*.css", "@testing-library/jest-dom/vitest"] },
+        ],
+      },
+    },
     plugins: [
       tanstackRouter({
-        target: "react",
         autoCodeSplitting: true,
         generatedRouteTree: "./src/generated/router.gen.tsx",
+        target: "react",
       }),
       react(),
     ],
+    resolve: {
+      alias: [{ find: /^#\//, replacement: `${path.resolve("src")}/` }],
+    },
     server: {
-      port: Number(PORT),
       allowedHosts: true,
+      port: Number(PORT),
     },
-    build: {
-      target: "esnext",
-      sourcemap: true,
-      outDir: "./build",
-      emptyOutDir: true,
-    },
-  });
-
-  const testConfig = mergeConfig(
-    baseTestConfig,
-    defineTestConfig({
-      test: {
-        include: ["**/**/*.{test,spec}.{ts,tsx}"],
-        coverage: {
-          exclude: [
-            "**/*.{test,spec}.{ts,tsx}",
-            "src/main.tsx",
-            "src/{generated,routes,assets}",
-            "**/*.{css,svg}",
-          ],
-        },
-        environment: "jsdom",
-        setupFiles: ["./vitest.setup.ts"],
+    test: {
+      coverage: {
+        exclude: [
+          "**/*.{test,spec}.{ts,tsx}",
+          "src/main.tsx",
+          "src/{generated,routes,assets}",
+          "**/*.{css,svg}",
+        ],
       },
-    }),
-  );
+      environment: "jsdom",
+      setupFiles: ["./vitest.setup.ts"],
+    },
+  };
 
-  return mergeConfig(config, testConfig);
+  return mergeConfig(baseConfig, appConfig);
 });

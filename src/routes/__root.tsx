@@ -1,7 +1,5 @@
-import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { Outlet, createRootRoute } from "@tanstack/react-router";
 import { Menu } from "#/components/menu/menu";
-
-export const Route = createRootRoute({ component: RootLayout });
 
 function RootLayout() {
   return (
@@ -13,3 +11,5 @@ function RootLayout() {
     </main>
   );
 }
+
+export const Route = createRootRoute({ component: RootLayout });

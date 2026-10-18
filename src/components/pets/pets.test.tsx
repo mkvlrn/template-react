@@ -1,16 +1,14 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
-import { afterEach, beforeEach, expect, test, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { Pets } from "#/components/pets/pets";
 
-let fetchSpy: ReturnType<typeof vi.spyOn>;
-beforeEach(() => {
-  fetchSpy = vi.spyOn(globalThis, "fetch");
-});
-afterEach(() => {
-  vi.restoreAllMocks();
-});
+vi.setConfig({ testTimeout: 1000 });
+
+const NONE = 0;
+const SINGLE = 1;
+const FIRST = 0;
 
 function createWrapper() {
   const queryClient = new QueryClient({
@@ -21,59 +19,65 @@ function createWrapper() {
   );
 }
 
-test("should show loading state initially", () => {
-  // arrange
-  fetchSpy.mockImplementation(() => new Promise(() => ({})));
-  // act
-  render(<Pets type="dog" />, { wrapper: createWrapper() });
-  // assert
-  expect(screen.getByText("🐾")).toBeVisible();
-  const imgs = screen
-    .queryAllByAltText("dog!")
-    .filter((img) => getComputedStyle(img).display !== "none");
-  expect(imgs).toHaveLength(0);
-});
-
-test("should show dog image when loaded", async () => {
-  // arrange
-  fetchSpy.mockResolvedValue(Response.json({ message: "DOG" }));
-  // act
-  render(<Pets type="dog" />, { wrapper: createWrapper() });
-  // assert
-  await waitFor(() => {
+describe("pets", () => {
+  it("should show loading state initially", () => {
+    // Arrange
+    expect.hasAssertions();
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(Response.json({ message: "DOG" }));
+    // Act
+    render(<Pets type="dog" />, { wrapper: createWrapper() });
+    // Assert
+    expect(screen.getByText("🐾")).toBeVisible();
     const imgs = screen
       .queryAllByAltText("dog!")
       .filter((img) => getComputedStyle(img).display !== "none");
-    expect(imgs).toHaveLength(1);
-    expect(imgs[0]).toHaveAttribute("src", "DOG");
+    expect(imgs).toHaveLength(NONE);
   });
-});
 
-test("should show cat image when loaded", async () => {
-  // arrange
-  fetchSpy.mockResolvedValue(Response.json([{ url: "CAT" }]));
-  // act
-  render(<Pets type="cat" />, { wrapper: createWrapper() });
-  // assert
-  await waitFor(() => {
-    const imgs = screen
-      .queryAllByAltText("cat!")
-      .filter((img) => getComputedStyle(img).display !== "none");
-    expect(imgs).toHaveLength(1);
-    expect(imgs[0]).toHaveAttribute("src", "CAT");
+  it("should show dog image when loaded", async () => {
+    // Arrange
+    expect.hasAssertions();
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(Response.json({ message: "DOG" }));
+    // Act
+    render(<Pets type="dog" />, { wrapper: createWrapper() });
+    // Assert
+    await waitFor(() => {
+      const imgs = screen
+        .queryAllByAltText("dog!")
+        .filter((img) => getComputedStyle(img).display !== "none");
+      expect(imgs).toHaveLength(SINGLE);
+      expect(imgs[FIRST]).toHaveAttribute("src", "DOG");
+    });
   });
-});
 
-test("should show error message on fetch failure", async () => {
-  // arrange
-  fetchSpy.mockRejectedValue(new Error("Network error"));
-  // act
-  render(<Pets type="dog" />, { wrapper: createWrapper() });
-  // assert
-  await waitFor(() => {
-    const errors = screen
-      .queryAllByText("Error loading pet :(")
-      .filter((el) => getComputedStyle(el).display !== "none");
-    expect(errors).toHaveLength(1);
+  it("should show cat image when loaded", async () => {
+    // Arrange
+    expect.hasAssertions();
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(Response.json([{ url: "CAT" }]));
+    // Act
+    render(<Pets type="cat" />, { wrapper: createWrapper() });
+    // Assert
+    await waitFor(() => {
+      const imgs = screen
+        .queryAllByAltText("cat!")
+        .filter((img) => getComputedStyle(img).display !== "none");
+      expect(imgs).toHaveLength(SINGLE);
+      expect(imgs[FIRST]).toHaveAttribute("src", "CAT");
+    });
+  });
+
+  it("should show error message on fetch failure", async () => {
+    // Arrange
+    expect.hasAssertions();
+    vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("Network error"));
+    // Act
+    render(<Pets type="dog" />, { wrapper: createWrapper() });
+    // Assert
+    await waitFor(() => {
+      const errors = screen
+        .queryAllByText("Error loading pet :(")
+        .filter((el) => getComputedStyle(el).display !== "none");
+      expect(errors).toHaveLength(SINGLE);
+    });
   });
 });

@@ -1,6 +1,6 @@
 import "./style.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createRouter, RouterProvider } from "@tanstack/react-router";
+import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { routeTree } from "#/generated/router.gen";
@@ -17,6 +17,7 @@ if (!rootElement) {
   throw new Error("Root element not found");
 }
 const root = createRoot(rootElement);
+// oxlint-disable-next-line vitest/require-hook -- app bootstrap, not test setup
 root.render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>

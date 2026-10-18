@@ -1,11 +1,16 @@
 import { render, screen } from "@testing-library/react";
-import { expect, test } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { Logo } from "#/components/logo/logo";
 
-test("should render the component", () => {
-  // act
-  render(<Logo />);
-  const logo = screen.getByRole("img");
-  // assert
-  expect(logo).toBeInTheDocument();
+vi.setConfig({ testTimeout: 1000 });
+
+describe("logo", () => {
+  it("should render the component", () => {
+    // Act
+    expect.hasAssertions();
+    render(<Logo />);
+    const logo = screen.getByRole("img");
+    // Assert
+    expect(logo).toBeInTheDocument();
+  });
 });
