@@ -1,9 +1,9 @@
-# template-vite-react
+# template-react
 
-[![ci](https://img.shields.io/github/actions/workflow/status/mkvlrn/template-vite-react/checks.yml?branch=main&style=flat&logo=github&label=ci)](https://github.com/mkvlrn/template-vite-react/actions/workflows/checks.yml?query=branch%3Amain)
-[![template](https://img.shields.io/badge/template-use_this_template-2ea44f?style=flat&logo=github)](https://github.com/mkvlrn/template-vite-react/generate)
+[![ci](https://img.shields.io/github/actions/workflow/status/mkvlrn/template-react/checks.yml?branch=main&style=flat&logo=github&label=ci)](https://github.com/mkvlrn/template-react/actions/workflows/checks.yml?query=branch%3Amain)
+[![template](https://img.shields.io/badge/template-use_this_template-2ea44f?style=flat&logo=github)](https://github.com/mkvlrn/template-react/generate)
 [![mise](https://mise-versions.jdx.dev/badge.svg)](https://mise.jdx.dev)
-[![license](https://img.shields.io/github/license/mkvlrn/template-vite-react?style=flat)](https://github.com/mkvlrn/template-vite-react/blob/main/LICENSE)
+[![license](https://img.shields.io/github/license/mkvlrn/template-react?style=flat)](https://github.com/mkvlrn/template-react/blob/main/LICENSE)
 
 A sane, opinionated template for React applications built with Vite and TypeScript.
 
@@ -74,7 +74,7 @@ Creates a production build.
 
 ## ci
 
-CI is provided by GitHub Actions through [`.github/workflows/checks.yml`](https://github.com/mkvlrn/template-vite-react/blob/main/.github/workflows/checks.yml).
+CI is provided by GitHub Actions through [`.github/workflows/checks.yml`](https://github.com/mkvlrn/template-react/blob/main/.github/workflows/checks.yml).
 
 It runs:
 
@@ -84,4 +84,4 @@ It runs:
 
 ## license
 
-[MIT](https://github.com/mkvlrn/template-vite-react/blob/main/LICENSE)
+[MIT](https://github.com/mkvlrn/template-react/blob/main/LICENSE)

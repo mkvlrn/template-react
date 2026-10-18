@@ -1,7 +1,7 @@
 {
-  "name": "Vite-React Single Page App",
-  "short_name": "vite-react-spa",
-  "description": "Vite-React Single Page App",
+  "name": "React Single Page App",
+  "short_name": "react-spa",
+  "description": "React Single Page App",
   "start_url": "/",
   "lang": "en",
   "display": "standalone",

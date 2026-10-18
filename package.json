@@ -1,5 +1,5 @@
 {
-  "name": "template-vite-react",
+  "name": "template-react",
   "version": "1.0.0",
   "private": true,
   "description": "A template for react projects built with vite",
@@ -13,7 +13,7 @@
   "author": "Mike Valeriano <dev@mkvlrn.cc>",
   "repository": {
     "type": "git",
-    "url": "git@github.com:mkvlrn/template-vite-react"
+    "url": "git@github.com:mkvlrn/template-react"
   },
   "type": "module",
   "dependencies": {

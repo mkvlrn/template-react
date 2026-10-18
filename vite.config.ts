@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
 
   let base = "/";
   if (GITHUB_ACTIONS) {
-    base = "/template-vite-react/";
+    base = "/template-react/";
   }
 
   const appConfig: UserConfig = {
