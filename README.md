@@ -15,11 +15,10 @@ A sane, opinionated template for React applications built with Vite and TypeScri
 Uses, among other tools/packages:
 
 - [pnpm](https://github.com/pnpm/pnpm) as package manager
-- [React](https://react.dev)
-- [Vite](https://vite.dev)
-- [Biome](https://github.com/biomejs/biome) for linting and formatting
+- [React](https://github.com/facebook/react)
+- [Vite+](https://github.com/voidzero-dev/vite-plus) (`vp`) for linting, formatting, type checking, and testing
 - [Lefthook](https://github.com/evilmartians/lefthook) for Git hooks
-- [Commitlint](https://commitlint.js.org) with [config-conventional](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional) for commit message linting
+- [Commitlint](https://github.com/conventional-changelog/commitlint) with [config-conventional](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional) for commit message linting
 - [Vitest](https://github.com/vitest-dev/vitest) for testing
 
 ## requirements and dependencies
@@ -60,13 +59,9 @@ Starts the Vite development server.
 
 Runs the tests.
 
-### `mise run lint-fix`
+### `mise run check`
 
-Runs Biome in fix mode to lint and format the project.
-
-### `mise run typecheck`
-
-Runs TypeScript type checking.
+Runs Vite+ checks: formatting, linting, and type checking. Pass `--fix` to apply fixes, or file paths to check specific files.
 
 ### `mise run build`
 
@@ -78,8 +73,7 @@ CI is provided by GitHub Actions through [`.github/workflows/checks.yml`](https:
 
 It runs:
 
-- Biome linting and formatting checks
-- TypeScript type checking
+- Vite+ checks (formatting, linting, and type checking)
 - Vitest tests
 
 ## license
