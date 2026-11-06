@@ -9,4 +9,4 @@ allowBuilds:
   lefthook: true
 # Must match the exact vite-plus-core version pinned by vite-plus; bump together with vite-plus.
 overrides:
-  vite: npm:@voidzero-dev/vite-plus-core@1.4.0
+  vite: npm:@voidzero-dev/vite-plus-core@1.5.0
