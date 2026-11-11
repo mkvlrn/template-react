@@ -3,4 +3,4 @@
 
 set -euo pipefail
 
-mise exec -- vite "$@"
+mise exec -- vp dev "$@"

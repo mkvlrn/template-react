@@ -3,4 +3,4 @@
 
 set -euo pipefail
 
-mise exec -- vite build "$@"
+mise exec -- vp build "$@"
